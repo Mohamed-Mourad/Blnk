@@ -6,7 +6,7 @@ class UserModel {
   String mobile;
   String landline;
   String email;
-  AddressModel address;
+  AddressModel? address;
 
   UserModel({
     required this.firstName,
@@ -14,7 +14,7 @@ class UserModel {
     required this.mobile,
     required this.landline,
     required this.email,
-    required this.address,
+    this.address,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -35,7 +35,7 @@ class UserModel {
       'mobile': mobile,
       'landline': landline,
       'email': email,
-      'address': address.toJson(),
+      'address': address != null ? address?.toJson() : "",
     };
   }
 }

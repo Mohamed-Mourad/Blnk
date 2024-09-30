@@ -13,7 +13,7 @@ class App extends StatelessWidget {
     return BlocProvider(
       create: (context) => InfoBloc(),
       child: BlocBuilder<InfoBloc, InfoState>(
-        builder: (context, themeState) {
+        builder: (context, state) {
           SystemChrome.setSystemUIOverlayStyle(
             const SystemUiOverlayStyle(
                 statusBarColor: Colors.transparent

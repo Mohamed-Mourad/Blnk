@@ -91,8 +91,8 @@ class Address extends StatelessWidget {
                     height: 20.0,
                   ),
                   CityAreaSelectors(
-                    initialCity: selectedCity,
-                    initialArea: selectedArea,
+                    initialCity: selectedCity == "" ? null : selectedCity,
+                    initialArea: selectedArea == "" ? null : selectedArea,
                     onCityChanged: (city) {
                       selectedCity = city;
                     },

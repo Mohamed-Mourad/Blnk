@@ -76,7 +76,7 @@ class _CreateAccountState extends State<CreateAccount> {
   List<Widget> pages = [
     PersonalInfo(),
     Address(),
-    const Confirmation(),
+    Confirmation(),
   ];
 
   @override

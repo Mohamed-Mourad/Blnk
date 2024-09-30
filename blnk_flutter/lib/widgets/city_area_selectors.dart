@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CityAreaSelectors extends StatefulWidget {
-
   final String? initialCity;
   final String? initialArea;
   final ValueChanged<String?>? onCityChanged;
@@ -25,7 +24,7 @@ class _CityAreaSelectorsState extends State<CityAreaSelectors> {
 
   final Map<String, List<String>> cityAreas = {
     'Cairo': ['Nasr City', 'Maadi', 'Heliopolis'],
-    'Giza': ['6th of October', 'Dokki', 'Mohandesin'],
+    'Giza': ['October', 'Dokki', 'Mohandesin'],
     'Alexandria': ['Stanley', 'Smouha', 'Sidi Gaber'],
   };
 
@@ -62,14 +61,13 @@ class _CityAreaSelectorsState extends State<CityAreaSelectors> {
                 borderSide: BorderSide(color: Colors.red, width: 1.0),
                 borderRadius: BorderRadius.all(Radius.circular(6.0)),
               ),
-
               labelText: "City",
             ),
             items: cityAreas.keys
                 .map((city) => DropdownMenuItem<String>(
-              value: city,
-              child: Text(city),
-            ))
+                      value: city,
+                      child: Text(city),
+                    ))
                 .toList(),
             onChanged: (value) {
               setState(() {
@@ -105,17 +103,19 @@ class _CityAreaSelectorsState extends State<CityAreaSelectors> {
                 borderSide: BorderSide(color: Colors.red, width: 1.0),
                 borderRadius: BorderRadius.all(Radius.circular(6.0)),
               ),
-
               labelText: "Area",
             ),
             items: selectedCity == null
                 ? []
                 : cityAreas[selectedCity!]!
-                .map((area) => DropdownMenuItem<String>(
-              value: area,
-              child: Text(area),
-            ))
-                .toList(),
+                    .map((area) => DropdownMenuItem<String>(
+                          value: area,
+                          child: Text(
+                            area,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ))
+                    .toList(),
             onChanged: (value) {
               setState(() {
                 selectedArea = value;
