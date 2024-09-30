@@ -35,3 +35,5 @@ class InfoSubmitAddress extends InfoEvent {
     required this.area,
   });
 }
+
+class InfoAddNewUser extends InfoEvent {}

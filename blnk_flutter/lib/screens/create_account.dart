@@ -143,7 +143,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   child: Text(
-                    currentPage == pages.length - 1 ? 'Confirm' : 'Next',
+                    currentPage == pages.length - 1 ? 'Submit' : 'Next',
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14.0,

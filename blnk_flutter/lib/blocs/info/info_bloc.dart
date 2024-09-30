@@ -7,6 +7,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
   InfoBloc() : super(InfoInitialState()) {
     on<InfoSubmitPersonalData>(_onSubmitPersonalInfo);
     on<InfoSubmitAddress>(_onSubmitAddress);
+    on<InfoAddNewUser>(_onAddNewUser);
   }
 
   UserModel? userModel;
@@ -40,4 +41,12 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
   void _onSubmitIdBack() {}
 
   void _onConfirm() {}
+
+  Future<void> _onAddNewUser(
+    InfoAddNewUser event,
+    Emitter<InfoState> emit,
+  ) async {
+    userModel = null;
+    emit(InfoInitialState());
+  }
 }
