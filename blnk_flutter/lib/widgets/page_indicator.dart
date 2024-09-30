@@ -32,7 +32,8 @@ class PageIndicator extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: isReached ? Colors.blue : Colors.transparent,
-        border: Border.all(color: isReached ? Colors.blue : Colors.grey),
+        border: Border.all(
+            color: isReached ? Colors.blue : Colors.grey, width: 2.0),
       ),
       child: Center(
         child: AnimatedDefaultTextStyle(
