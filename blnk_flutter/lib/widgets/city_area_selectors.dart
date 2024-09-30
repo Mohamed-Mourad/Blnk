@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CityAreaSelectors extends StatefulWidget {
-  const CityAreaSelectors({super.key});
+
+  final String? initialCity;
+  final String? initialArea;
+  final ValueChanged<String?>? onCityChanged;
+  final ValueChanged<String?>? onAreaChanged;
+
+  CityAreaSelectors({
+    super.key,
+    this.initialCity,
+    this.initialArea,
+    this.onCityChanged,
+    this.onAreaChanged,
+  });
 
   @override
   _CityAreaSelectorsState createState() => _CityAreaSelectorsState();
@@ -16,6 +28,13 @@ class _CityAreaSelectorsState extends State<CityAreaSelectors> {
     'Giza': ['6th of October', 'Dokki', 'Mohandesin'],
     'Alexandria': ['Stanley', 'Smouha', 'Sidi Gaber'],
   };
+
+  @override
+  void initState() {
+    selectedCity = widget.initialCity;
+    selectedArea = widget.initialArea;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +74,8 @@ class _CityAreaSelectorsState extends State<CityAreaSelectors> {
             onChanged: (value) {
               setState(() {
                 selectedCity = value;
-                selectedArea = null; // Reset area when city changes
+                selectedArea = null;
+                widget.onCityChanged?.call(selectedCity);
               });
             },
             validator: (value) => value == null ? 'City is required' : null,
@@ -99,6 +119,7 @@ class _CityAreaSelectorsState extends State<CityAreaSelectors> {
             onChanged: (value) {
               setState(() {
                 selectedArea = value;
+                widget.onAreaChanged?.call(selectedArea);
               });
             },
             validator: (value) => value == null ? 'Area is required' : null,

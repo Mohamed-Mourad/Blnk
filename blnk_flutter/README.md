@@ -14,6 +14,7 @@ The following packages are used in this project:
 
 - **flutter_native_splash**: ^2.4.1
 - **fluttertoast**: ^8.2.8
+- **flutter_bloc**: ^8.1.6
 
 
 ## Getting Started
