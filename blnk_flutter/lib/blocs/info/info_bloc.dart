@@ -1,11 +1,12 @@
+import 'dart:io';
 import 'package:blnk_flutter/blocs/info/info_events.dart';
 import 'package:blnk_flutter/blocs/info/info_states.dart';
-import 'package:blnk_flutter/methods/navigations.dart';
+import 'package:blnk_flutter/methods/googleApis.dart';
 import 'package:blnk_flutter/models/address_model.dart';
 import 'package:blnk_flutter/models/user_model.dart';
-import 'package:blnk_flutter/screens/create_account.dart';
-import 'package:blnk_flutter/widgets/create_account_widgets/address.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:googleapis/drive/v3.dart' as drive;
+import 'package:googleapis/sheets/v4.dart' as sheets;
 
 class InfoBloc extends Bloc<InfoEvent, InfoState> {
   InfoBloc() : super(InfoInitialState()) {
@@ -14,6 +15,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
     on<InfoAddNewUser>(_onAddNewUser);
     on<InfoSubmitIdFront>(_onSubmitIdFront);
     on<InfoSubmitIdBack>(_onSubmitIdBack);
+    on<InfoUploadData>(_onConfirm);
   }
 
   UserModel? userModel;
@@ -30,8 +32,6 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
       landline: event.landline,
       email: event.email,
     );
-    print(
-        "Personal info submitted: ${userModel?.firstName}, ${userModel?.lastName}");
     emit(InfoPersonalDataSubmitted());
   }
 
@@ -49,8 +49,6 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
       area: event.area,
     );
     userModel?.address = addressModel;
-
-    print("address submitted");
     emit(InfoAddressSubmitted());
   }
 
@@ -66,14 +64,56 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
   }
 
   void _onSubmitIdBack(
-      InfoSubmitIdBack event,
-      Emitter<InfoState> emit,
-      ) async {
+    InfoSubmitIdBack event,
+    Emitter<InfoState> emit,
+  ) async {
     idBackImagePath = event.idBackPath;
     emit(InfoIdBackSubmitted());
   }
 
-  void _onConfirm() {}
+  Future<void> _onConfirm(
+      InfoUploadData event,
+      Emitter<InfoState> emit,
+      ) async {
+    try {
+      emit(InfoUploadLoading());
+
+      // Authenticate with Google
+      var authClient = await authenticateWithGoogle();
+
+      // Initialize Google APIs
+      final driveApi = drive.DriveApi(authClient);
+      final sheetsApi = sheets.SheetsApi(authClient);
+
+      // Upload the front and back images
+      var frontImageFile = File(idFrontImagePath);
+      var backImageFile = File(idBackImagePath);
+
+      var frontImageResponse = await uploadFileToDrive(
+          driveApi, frontImageFile, 'ID_Front_${userModel?.firstName}.jpg');
+      var backImageResponse = await uploadFileToDrive(
+          driveApi, backImageFile, 'ID_Back_${userModel?.firstName}.jpg');
+
+      String frontImageId = frontImageResponse.id!;
+      String backImageId = backImageResponse.id!;
+
+      // Append data to Google Sheets
+      await appendDataToSheet(
+          sheetsApi,
+          'your_spreadsheet_id', // replace with your spreadsheet ID
+          'Users', // replace with the sheet name
+          userModel!,
+          addressModel!,
+          frontImageId,
+          backImageId
+      );
+
+      emit(InfoUploadSuccess());
+    } catch (e) {
+      emit(InfoUploadError(e.toString()));
+    }
+  }
+
 
   Future<void> _onAddNewUser(
     InfoAddNewUser event,

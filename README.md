@@ -16,6 +16,15 @@ The following packages are used in this project:
 - **fluttertoast**: ^8.2.8
 - **flutter_bloc**: ^8.1.6
 - **conditional_builder_null_safety**: ^0.0.6
+  **camera**: ^0.11.0+2
+  **crop_your_image**: ^1.1.0
+  **path_provider**: ^2.1.4
+  **path**: ^1.9.0
+  **googleapis**: ^9.1.0
+  **googleapis_auth**: ^1.3.0
+  **dio**: ^5.0.0
+  **file_picker**: ^5.0.0
+  **http**: ^0.13.0
 
 
 ## Getting Started

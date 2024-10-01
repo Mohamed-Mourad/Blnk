@@ -53,3 +53,5 @@ class InfoSubmitIdBack extends InfoEvent {
     required this.idBackPath,
   });
 }
+
+class InfoUploadData extends InfoEvent {}
