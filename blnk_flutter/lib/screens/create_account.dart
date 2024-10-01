@@ -4,6 +4,7 @@ import 'package:blnk_flutter/blocs/info/info_states.dart';
 import 'package:blnk_flutter/methods/navigations.dart';
 import 'package:blnk_flutter/methods/show_toast.dart';
 import 'package:blnk_flutter/screens/id_capture.dart';
+import 'package:blnk_flutter/screens/registration_complete.dart';
 import 'package:blnk_flutter/widgets/create_account_widgets/address.dart';
 import 'package:blnk_flutter/widgets/create_account_widgets/confrimation.dart';
 import 'package:blnk_flutter/widgets/create_account_widgets/personal_info.dart';
@@ -86,7 +87,7 @@ class _CreateAccountState extends State<CreateAccount> {
         showToast(text: "Invalid information provided; Please recheck your data.", state: ToastStates.ERROR);
       }
     } else {
-      // TODO: HANDLE CONFIRMATION AND UPLOAD
+      navigateAndReplace(context, const RegistrationComplete());
     }
   }
 
@@ -108,7 +109,7 @@ class _CreateAccountState extends State<CreateAccount> {
               title: const Text(
                 "CREATE ACCOUNT",
                 style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 18.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),

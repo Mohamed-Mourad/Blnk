@@ -48,6 +48,7 @@ class _IdCaptureState extends State<IdCapture> {
 
     final cameras = await availableCameras();
     final firstCamera = cameras.first;
+    print("Camera orientation: ${firstCamera.sensorOrientation}");
 
     _controller = CameraController(
       firstCamera,
@@ -55,6 +56,7 @@ class _IdCaptureState extends State<IdCapture> {
     );
 
     _initializeControllerFuture = _controller?.initialize();
+
     setState(() {});
   }
 

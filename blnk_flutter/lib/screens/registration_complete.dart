@@ -41,10 +41,11 @@ class RegistrationComplete extends StatelessWidget {
               const Text(
                 "Registration Complete",
                 style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 21.0,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF333333)
+                  color: Color(0xFF333333),
                 ),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 35.0,),
               const Text(

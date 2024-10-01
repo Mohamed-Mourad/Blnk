@@ -105,6 +105,7 @@ class _CityAreaSelectorsState extends State<CityAreaSelectors> {
               ),
               labelText: "Area",
             ),
+            isExpanded: true,
             items: selectedCity == null
                 ? []
                 : cityAreas[selectedCity!]!
@@ -112,7 +113,9 @@ class _CityAreaSelectorsState extends State<CityAreaSelectors> {
                           value: area,
                           child: Text(
                             area,
-                            overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.clip,
+                            maxLines: 1,
+                            softWrap: false,
                           ),
                         ))
                     .toList(),
