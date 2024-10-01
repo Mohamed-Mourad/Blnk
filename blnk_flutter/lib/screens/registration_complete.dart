@@ -66,7 +66,7 @@ class RegistrationComplete extends StatelessWidget {
                     elevation: 6.0,
                     onPressed: (){
                       context.read<InfoBloc>().add(InfoAddNewUser());
-                      navigateAndReplace(context, const CreateAccount());
+                      navigateAndReplace(context, const CreateAccount(initialPage: 0,));
                     },
                     color: Colors.blue,
                     shape: RoundedRectangleBorder(

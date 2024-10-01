@@ -37,3 +37,19 @@ class InfoSubmitAddress extends InfoEvent {
 }
 
 class InfoAddNewUser extends InfoEvent {}
+
+class InfoSubmitIdFront extends InfoEvent {
+  final String idFrontPath;
+
+  InfoSubmitIdFront({
+    required this.idFrontPath,
+});
+}
+
+class InfoSubmitIdBack extends InfoEvent {
+  final String idBackPath;
+
+  InfoSubmitIdBack({
+    required this.idBackPath,
+  });
+}

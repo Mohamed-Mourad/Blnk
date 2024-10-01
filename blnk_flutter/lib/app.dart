@@ -1,6 +1,7 @@
 import 'package:blnk_flutter/blocs/info/info_bloc.dart';
 import 'package:blnk_flutter/blocs/info/info_states.dart';
 import 'package:blnk_flutter/screens/create_account.dart';
+import 'package:blnk_flutter/screens/id_capture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +26,7 @@ class App extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple, primary: Colors.blue),
               useMaterial3: true,
             ),
-            home: const CreateAccount(),
+            home: const CreateAccount(initialPage: 0),
           );
         },
       ),

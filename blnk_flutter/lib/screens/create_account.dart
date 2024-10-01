@@ -1,6 +1,9 @@
 import 'package:blnk_flutter/blocs/info/info_bloc.dart';
 import 'package:blnk_flutter/blocs/info/info_events.dart';
+import 'package:blnk_flutter/blocs/info/info_states.dart';
+import 'package:blnk_flutter/methods/navigations.dart';
 import 'package:blnk_flutter/methods/show_toast.dart';
+import 'package:blnk_flutter/screens/id_capture.dart';
 import 'package:blnk_flutter/widgets/create_account_widgets/address.dart';
 import 'package:blnk_flutter/widgets/create_account_widgets/confrimation.dart';
 import 'package:blnk_flutter/widgets/create_account_widgets/personal_info.dart';
@@ -9,15 +12,28 @@ import 'package:blnk_flutter/widgets/page_indicator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateAccount extends StatefulWidget {
-  const CreateAccount({super.key});
+  final int initialPage;
+
+  const CreateAccount({
+    super.key,
+    required this.initialPage,
+  });
 
   @override
   _CreateAccountState createState() => _CreateAccountState();
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-  var boardingController = PageController();
+  late PageController boardingController;
   int currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the PageController with the initialPage passed to the widget
+    boardingController = PageController(initialPage: widget.initialPage);
+    currentPage = widget.initialPage;  // Set currentPage to the initialPage
+  }
 
   void onNextSubmitPressed() {
     if (currentPage < pages.length - 1) {
@@ -40,6 +56,10 @@ class _CreateAccountState extends State<CreateAccount> {
                   email: email,
               ),
           );
+          boardingController.nextPage(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
         }
         if(currentPage == 1) {
           var apt = (pages[1] as Address).aptController.text;
@@ -60,11 +80,8 @@ class _CreateAccountState extends State<CreateAccount> {
                 area: area,
             ),
           );
+          navigateAndReplace(context, IdCapture(subtitle: "Front", capturedSide: "Front",));
         }
-        boardingController.nextPage(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
       } else {
         showToast(text: "Invalid information provided; Please recheck your data.", state: ToastStates.ERROR);
       }
@@ -76,7 +93,7 @@ class _CreateAccountState extends State<CreateAccount> {
   List<Widget> pages = [
     PersonalInfo(),
     Address(),
-    Confirmation(),
+    const Confirmation(),
   ];
 
   @override

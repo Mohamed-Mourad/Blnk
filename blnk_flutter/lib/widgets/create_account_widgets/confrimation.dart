@@ -3,6 +3,7 @@ import 'package:blnk_flutter/blocs/info/info_states.dart';
 import 'package:blnk_flutter/models/user_model.dart';
 import 'package:blnk_flutter/widgets/confirmation_field_label.dart';
 import 'package:blnk_flutter/widgets/disabled_form_field.dart';
+import 'package:blnk_flutter/widgets/image_form_field.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,8 @@ class Confirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserModel? userModel = context.read<InfoBloc>().userModel;
+    String frontIdPath = context.read<InfoBloc>().idFrontImagePath;
+    String backIdPath = context.read<InfoBloc>().idBackImagePath;
 
     return BlocConsumer<InfoBloc, InfoState>(
       listener: (context, state) {},
@@ -54,6 +57,9 @@ class Confirmation extends StatelessWidget {
                   ),
                   const SizedBox(height: 15.0,),
                   const ConfirmationFieldLabel(icon: Icons.badge_outlined, text: "NATIONAL ID"),
+                  ImageFormField(text: "Front Id", path: frontIdPath),
+                  const SizedBox(height: 4.0,),
+                  ImageFormField(text: "Back Id", path: backIdPath),
                 ],
               ),
             ),
