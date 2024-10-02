@@ -1,12 +1,11 @@
-import 'dart:io';
 import 'package:blnk_flutter/blocs/info/info_events.dart';
 import 'package:blnk_flutter/blocs/info/info_states.dart';
-import 'package:blnk_flutter/methods/googleApis.dart';
+import 'package:blnk_flutter/methods/google_apis.dart';
 import 'package:blnk_flutter/models/address_model.dart';
 import 'package:blnk_flutter/models/user_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:googleapis/drive/v3.dart' as drive;
-import 'package:googleapis/sheets/v4.dart' as sheets;
+import 'package:http/http.dart';
+
 
 class InfoBloc extends Bloc<InfoEvent, InfoState> {
   InfoBloc() : super(InfoInitialState()) {
@@ -72,48 +71,20 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
   }
 
   Future<void> _onConfirm(
-      InfoUploadData event,
-      Emitter<InfoState> emit,
-      ) async {
+    InfoUploadData event,
+    Emitter<InfoState> emit,
+  ) async {
     try {
       emit(InfoUploadLoading());
-
-      // Authenticate with Google
-      var authClient = await authenticateWithGoogle();
-
-      // Initialize Google APIs
-      final driveApi = drive.DriveApi(authClient);
-      final sheetsApi = sheets.SheetsApi(authClient);
-
-      // Upload the front and back images
-      var frontImageFile = File(idFrontImagePath);
-      var backImageFile = File(idBackImagePath);
-
-      var frontImageResponse = await uploadFileToDrive(
-          driveApi, frontImageFile, 'ID_Front_${userModel?.firstName}.jpg');
-      var backImageResponse = await uploadFileToDrive(
-          driveApi, backImageFile, 'ID_Back_${userModel?.firstName}.jpg');
-
-      String frontImageId = frontImageResponse.id!;
-      String backImageId = backImageResponse.id!;
-
-      // Append data to Google Sheets
-      await appendDataToSheet(
-          sheetsApi,
-          'your_spreadsheet_id', // replace with your spreadsheet ID
-          'Users', // replace with the sheet name
-          userModel!,
-          addressModel!,
-          frontImageId,
-          backImageId
-      );
-
+      print("try upload info");
+      uploadToSpreadsheet(userModel!);
       emit(InfoUploadSuccess());
-    } catch (e) {
+      print("upload success");
+      } catch (e) {
+      print(e.toString());
       emit(InfoUploadError(e.toString()));
     }
   }
-
 
   Future<void> _onAddNewUser(
     InfoAddNewUser event,

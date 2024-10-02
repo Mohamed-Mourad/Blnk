@@ -193,7 +193,7 @@ class _IdCaptureState extends State<IdCapture> {
 
     // Define the cropping rectangle based on the green rectangle's dimensions
     final width = (originalImage.width * 0.9).toInt(); // 90% of width
-    final height = (originalImage.height * (5.5 / 8.5)).toInt(); // Aspect ratio 5.5:8.5
+    final height = ((originalImage.width * 5.5) / 8.5).toInt(); // Aspect ratio 5.5:8.5
     final x = (originalImage.width - width) ~/ 2; // Center x
     final y = (originalImage.height - height) ~/ 2; // Center y
 

@@ -87,7 +87,7 @@ class _CreateAccountState extends State<CreateAccount> {
         showToast(text: "Invalid information provided; Please recheck your data.", state: ToastStates.ERROR);
       }
     } else {
-      navigateAndReplace(context, const RegistrationComplete());
+      context.read<InfoBloc>().add(InfoUploadData());
     }
   }
 
@@ -153,19 +153,28 @@ class _CreateAccountState extends State<CreateAccount> {
               child: SizedBox(
                 width: 240.0,
                 height: 48.0,
-                child: MaterialButton(
-                  elevation: 6.0,
-                  onPressed: onNextSubmitPressed,
-                  color: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Text(
-                    currentPage == pages.length - 1 ? 'Submit' : 'Next',
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w600),
+                child: BlocListener<InfoBloc, InfoState>(
+                  listener: (context, state) {
+                    if (state is InfoUploadSuccess) {
+                      navigateAndReplace(context, const RegistrationComplete());
+                    } else if (state is InfoUploadError) {
+                      showToast(text: "Failed to upload data :(", state: ToastStates.ERROR);
+                    }
+                  },
+                  child: MaterialButton(
+                    elevation: 6.0,
+                    onPressed: onNextSubmitPressed,
+                    color: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Text(
+                      currentPage == pages.length - 1 ? 'Submit' : 'Next',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
               ),
