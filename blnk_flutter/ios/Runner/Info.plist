@@ -29,9 +29,9 @@
 		<key>UIMainStoryboardFile</key>
 		<string>Main</string>
 		<key>NSCameraUsageDescription</key>
-        <string>Need to Scan ID</string>
-        <key>NSMicrophoneUsageDescription</key>
-        <string>your usage description here</string>
+		<string>Need to Scan ID</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>your usage description here</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>

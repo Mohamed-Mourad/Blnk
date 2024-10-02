@@ -20,7 +20,9 @@ The following packages are used in this project:
   **crop_your_image**: ^1.1.0
   **path_provider**: ^2.1.4
   **path**: ^1.9.0
-  **http**: ^0.13.0
+  **http**: ^1.0.0
+  **googleapis**: ^13.2.0
+  **googleapis_auth**: ^1.6.0
 
 
 ## Getting Started

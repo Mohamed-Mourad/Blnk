@@ -74,14 +74,13 @@ class InfoBloc extends Bloc<InfoEvent, InfoState> {
     InfoUploadData event,
     Emitter<InfoState> emit,
   ) async {
+    String? idFrontUrl = await uploadToDrive(filePath: idFrontImagePath, idSide: "idFront");
+    String? idBackUrl = await uploadToDrive(filePath: idBackImagePath, idSide: "idBack");
     try {
       emit(InfoUploadLoading());
-      print("try upload info");
-      uploadToSpreadsheet(userModel!);
+      uploadToSpreadsheet(userModel!, idFrontUrl ?? '', idBackUrl ?? '');
       emit(InfoUploadSuccess());
-      print("upload success");
       } catch (e) {
-      print(e.toString());
       emit(InfoUploadError(e.toString()));
     }
   }
